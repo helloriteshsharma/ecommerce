@@ -50,6 +50,18 @@ const Login = () => {
         localStorage.setItem("jwtToken", response.headers.authorization);
         localStorage.setItem("name", response.data.firstNAme || "LogIn");
         localStorage.setItem("userid", response.data.id);
+
+         // Additional API call to a protected endpoint, if needed
+         const token = localStorage.getItem("jwtToken");
+         const protectedResponse = await axios.get('https://your-backend.onrender.com/protected-endpoint', {
+           headers: {
+             Authorization: `Bearer ${token}`,
+           },
+         });
+ 
+         console.log("Protected data:", protectedResponse.data);  // You can process this data as required
+ 
+
         alert("Login successfully");
         navigate("/");
       } else {
